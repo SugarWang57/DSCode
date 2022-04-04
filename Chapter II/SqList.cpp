@@ -5,12 +5,23 @@
 #define INITSIZE 10
 #define INCREASESIZE 10
 
+/**
+ * @brief 定义每个表元素
+ * 
+ */
 typedef struct {
     elemType* data;
     int length;
     int maxSize;
 }sqList;
 
+/**
+ * @brief 当表满了，分配新的长度
+ * 
+ * @param L 
+ * @return true 分配成功
+ * @return false 分配失败
+ */
 bool increaseMemory(sqList &L){
     sqList T;
     T.data = (elemType*)malloc(sizeof(elemType) * (L.maxSize + INCREASESIZE));
@@ -19,6 +30,13 @@ bool increaseMemory(sqList &L){
     return true;
 }
 
+/**
+ * @brief 初始化顺序表
+ * 
+ * @param L 
+ * @return true 
+ * @return false 
+ */
 bool initSqList(sqList &L){
     if(!(L.data = (elemType*)malloc(sizeof(elemType) * INITSIZE)))
         return false;
@@ -27,6 +45,15 @@ bool initSqList(sqList &L){
     return true;
 }
 
+/**
+ * @brief 制定位置插入元素
+ * 
+ * @param L 
+ * @param index 位置
+ * @param e 元素
+ * @return true 
+ * @return false 
+ */
 bool insert(sqList &L,int index,int e){
     if(L.length == L.maxSize)
         increaseMemory(L);
@@ -53,6 +80,13 @@ bool insert(sqList &L,int index,int e){
     
 }
 
+/**
+ * @brief 制定位置删除元素
+ * 
+ * @param L 
+ * @param index 位置
+ * @return elemType 返回元素
+ */
 elemType deleteElem(sqList &L,int index){
     if(index <= 0 || index > L.length)
         return false;;
@@ -66,6 +100,11 @@ elemType deleteElem(sqList &L,int index){
     
 }
 
+/**
+ * @brief 遍历顺序表
+ * 
+ * @param L 
+ */
 void traverse(sqList L){
     if(L.length == 0){
         printf("表为空!\n");
@@ -79,15 +118,34 @@ void traverse(sqList L){
     printf("\n");
 }
 
+/**
+ * @brief 返回表长
+ * 
+ * @param L 
+ * @return int 
+ */
 int length(sqList L){
     return L.length;
 }
 
+/**
+ * @brief 按照位置查找元素
+ * 
+ * @param L 
+ * @param index 查找位置
+ * @return elemType 结果
+ */
 elemType searchByIndex(sqList L,int index){
     if(index >= 0 && index <= L.length && L.length != 0)
         return L.data[index - 1];
 }
 
+/**
+ * @brief 按照元素返回位置
+ * 
+ * @param L 
+ * @param elem 元素
+ */
 void searchByElem(sqList L,elemType elem){ //输出所有遇到的elem
     printf("searching by Elem …… \n");
     if(L.length != 0){
@@ -99,6 +157,13 @@ void searchByElem(sqList L,elemType elem){ //输出所有遇到的elem
     }
 }
 
+/**
+ * @brief 清空顺序表
+ * 
+ * @param L 
+ * @return true 
+ * @return false 
+ */
 bool clearSqList(sqList &L){
     L.data = NULL;
     L.length = 0;
@@ -106,6 +171,13 @@ bool clearSqList(sqList &L){
     return true;
 }
 
+/**
+ * @brief 销毁顺序表
+ * 
+ * @param L 
+ * @return true 
+ * @return false 
+ */
 bool destroySqList(sqList &L){
     L.data = NULL;
     L.length = 0;
@@ -115,7 +187,11 @@ bool destroySqList(sqList &L){
         
 }
 
-int main(){
+/**
+ * @brief 测试方法，测试各个方法的正确性，健壮性
+ * 
+ */
+void test(){
     sqList L;
     if(initSqList(L))
         printf("初始化成功！\n");
@@ -133,5 +209,9 @@ int main(){
     clearSqList(L);
     traverse(L);
     destroySqList(L);
+}
+
+int main(){
+    test();
     return 0;
 }

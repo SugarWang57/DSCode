@@ -25,6 +25,7 @@ typedef struct {
 bool increaseMemory(sqList &L){
     sqList T;
     T.data = (elemType*)malloc(sizeof(elemType) * (L.maxSize + INCREASESIZE));
+    L.maxSize += INCREASESIZE;
     T.data = L.data;
     L = T;
     return true;
